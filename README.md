@@ -9,5 +9,5 @@ You may need to make the script reachable from everywhere by adding the script t
 
 ## Run
 
-`$ fontnik <ttf file path> <target folder path>`
+`$ fastfontnik <ttf file path> <target folder path>`
 
