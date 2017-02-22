@@ -3,9 +3,22 @@
 ttfpath=$1
 target=$2
 
-echo "converting ttf font $ttfpath to pbf at $target"
+echo " ****************** converting ttf font $ttfpath to pbf at $target **************************"
+echo
 
-docker create -it --name fontnik gnostrenoff/fontnik build-glyphs /font.ttf /target
+if [ "$#" -ne 1 ]; then
+    echo "Illegal number of parameters. Please provide required arguments"
+    echo
+    echo "fontnik <ttf filepath> <targetpath>"
+    exit
+fi
+
+if [ ! -f $ttfpath ]; 
+    then echo "TTF file not found"; 
+    exit
+fi
+
+docker create -it --rm --name fontnik gnostrenoff/fontnik build-glyphs /font.ttf /target
 docker cp $ttfpath fontnik:/font.ttf
 docker start -a fontnik
 docker cp fontnik:/target/. $target
