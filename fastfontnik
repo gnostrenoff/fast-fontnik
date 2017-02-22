@@ -6,10 +6,10 @@ target=$2
 echo " ****************** converting ttf font $ttfpath to pbf at $target **************************"
 echo
 
-if [ "$#" -ne 1 ]; then
-    echo "Illegal number of parameters. Please provide required arguments"
+if [ "$#" -ne 2 ]; then
+    echo "Illegal number of parameters. Please provide the 2 required arguments"
     echo
-    echo "fontnik <ttf filepath> <targetpath>"
+    echo "fastfontnik <ttf filepath> <targetpath>"
     exit
 fi
 
@@ -18,7 +18,8 @@ if [ ! -f $ttfpath ];
     exit
 fi
 
-docker create -it --rm --name fontnik gnostrenoff/fontnik build-glyphs /font.ttf /target
+docker rm -f fontnik
+docker create -it --name fontnik gnostrenoff/fontnik build-glyphs /font.ttf /target
 docker cp $ttfpath fontnik:/font.ttf
 docker start -a fontnik
 docker cp fontnik:/target/. $target
