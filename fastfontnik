@@ -18,7 +18,7 @@ if [ ! -f $ttfpath ];
     exit
 fi
 
-docker rm -f fontnik
+docker rm -f fontnik || true
 docker create -it --name fontnik gnostrenoff/fontnik build-glyphs /font.ttf /target
 docker cp $ttfpath fontnik:/font.ttf
 docker start -a fontnik
